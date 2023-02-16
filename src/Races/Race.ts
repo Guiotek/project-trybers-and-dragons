@@ -20,7 +20,7 @@ abstract class Race {
     throw error;
   }
 
-  abstract maxLifePoints():number;
+  abstract get maxLifePoints(): number;
 }
 
 export default Race;
