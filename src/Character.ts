@@ -62,7 +62,7 @@ export default class Character implements Fighter {
   }
 
   receiveDamage(attackPoints: number): number {
-    const damage = this._defense - attackPoints;
+    const damage = attackPoints - this.defense;
     if (damage > 0) {
       this._lifePoints -= damage;
     }
@@ -72,7 +72,8 @@ export default class Character implements Fighter {
     if (this._lifePoints <= 0) {
       this._lifePoints = -1;
     }
-    return this._lifePoints;
+
+    return this.lifePoints;
   }
 
   attack(enemy: Fighter): void {
@@ -81,17 +82,18 @@ export default class Character implements Fighter {
   }
 
   levelUp(): void {
-    const lifePoints = this._maxLifePoints + getRandomInt(1, 10);
     this._strength += getRandomInt(1, 10);
     this._dexterity += getRandomInt(1, 10);
     this._defense += getRandomInt(1, 10);
     this._energy.amount = 10;
-    if (lifePoints > this.race.maxLifePoints) {
-      this._maxLifePoints = this.race.maxLifePoints;
+    const lifePointsUp = this._maxLifePoints + getRandomInt(1, 10);
+    console.log(lifePointsUp);
+    if (lifePointsUp >= this._race.maxLifePoints) {
+      this._maxLifePoints = this._race.maxLifePoints;
     }
-
-    if (lifePoints < this.race.maxLifePoints) {
-      this._maxLifePoints = lifePoints;
+    if (lifePointsUp <= this._race.maxLifePoints) {
+      this._maxLifePoints = lifePointsUp;
     }
+    this._lifePoints = this._maxLifePoints;
   }
 }
